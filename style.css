@@ -1,0 +1,64 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #4cb6c9;
+  text-align: center;
+  padding: 20px;
+  color: white;
+}
+
+.search-box {
+  margin-bottom: 20px;
+}
+
+input {
+  padding: 10px;
+  width: 220px;
+  border-radius: 6px;
+  border: none;
+}
+
+button {
+  padding: 10px 16px;
+  background: #0b5ed7;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.weather-card {
+  background: white;
+  color: black;
+  padding: 20px;
+  border-radius: 12px;
+  margin: 20px auto;
+  width: 320px;
+}
+
+.forecast-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.forecast-card {
+  background: white;
+  color: black;
+  padding: 10px;
+  border-radius: 10px;
+  min-width: 110px;
+}
+/* Hourly forecast container */
+#hourlyForecast {
+  display: flex;
+  gap: 15px;
+  overflow-x: auto;
+  padding: 10px 5px;
+  scroll-behavior: smooth;
+}
+
+#hourlyForecast::-webkit-scrollbar {
+  display: none;                /* Chrome, Safari */
+}
