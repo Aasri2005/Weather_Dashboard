@@ -1,64 +1,86 @@
-body {
-  font-family: Arial, sans-serif;
-  background: #4cb6c9;
-  text-align: center;
-  padding: 20px;
-  color: white;
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-.search-box {
-  margin-bottom: 20px;
+body {
+    background: #4fb6c8;
+    margin: 0;
+    padding: 20px;
+    color: #fff;
+}
+
+.app {
+    max-width: 1100px;
+    margin: auto;
+    text-align: center;
+}
+
+.search {
+    margin: 20px 0;
 }
 
 input {
-  padding: 10px;
-  width: 220px;
-  border-radius: 6px;
-  border: none;
+    padding: 10px;
+    width: 220px;
+    border-radius: 6px;
+    border: none;
 }
 
 button {
-  padding: 10px 16px;
-  background: #0b5ed7;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+    padding: 10px 15px;
+    border: none;
+    background: #0d5bd7;
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.weather-card {
-  background: white;
-  color: black;
-  padding: 20px;
-  border-radius: 12px;
-  margin: 20px auto;
-  width: 320px;
+.current {
+    background: white;
+    color: black;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 30px;
 }
 
-.forecast-row {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  overflow-x: auto;
-  margin-bottom: 20px;
+.scroll-wrapper {
+    display: flex;
+    align-items: center;
 }
 
-.forecast-card {
-  background: white;
-  color: black;
-  padding: 10px;
-  border-radius: 10px;
-  min-width: 110px;
-}
-/* Hourly forecast container */
-#hourlyForecast {
-  display: flex;
-  gap: 15px;
-  overflow-x: auto;
-  padding: 10px 5px;
-  scroll-behavior: smooth;
+.scroll-btn {
+    font-size: 28px;
+    background: none;
+    color: white;
+    border: none;
+    cursor: pointer;
 }
 
-#hourlyForecast::-webkit-scrollbar {
-  display: none;                /* Chrome, Safari */
+.hourly {
+    display: flex;
+    gap: 15px;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+
+.daily {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.card {
+    background: white;
+    color: black;
+    padding: 15px;
+    border-radius: 12px;
+    min-width: 120px;
+}
+
+.icon {
+    font-size: 26px;
+    margin: 8px 0;
 }
