@@ -6,7 +6,6 @@ async function getWeather() {
     return;
   }
 
-  // 📍 Get city coordinates
   const geoUrl = `https://geocoding-api.open-meteo.com/v1/search?name=${city}&count=1`;
   const geoRes = await fetch(geoUrl);
   const geoData = await geoRes.json();
@@ -17,7 +16,6 @@ async function getWeather() {
   }
 
   const { latitude, longitude, name, country } = geoData.results[0];
-
   document.getElementById("cityName").innerText = `${name}, ${country}`;
 
   showExactTimeOnce();
@@ -27,39 +25,30 @@ async function getWeather() {
 // 🕒 Show exact time once
 function showExactTimeOnce() {
   const now = new Date();
-
-  const day = String(now.getDate()).padStart(2, "0");
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const year = now.getFullYear();
-
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-
   document.getElementById("time").innerText =
-    `Time: ${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    `Time: ${now.toLocaleDateString()} ${now.toLocaleTimeString()}`;
 }
 
 // 🌦 Fetch weather data
 async function fetchWeatherData(lat, lon) {
-
   const weatherUrl =
     `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,weathercode&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`;
 
   const res = await fetch(weatherUrl);
   const data = await res.json();
 
-  const currentHour = new Date().getHours();
+  const now = new Date();
+  const currentHour = now.getHours();
 
   // 🌡 Current temperature
   document.getElementById("temp").innerText =
     `Temperature: ${data.hourly.temperature_2m[currentHour]} °C`;
 
-  // ⏱ Hourly Forecast (ALL HOURS – including before 13:00)
+  // ⏱ Hourly Forecast (CURRENT TIME → MIDNIGHT ✅)
   const hourlyDiv = document.getElementById("hourlyForecast");
   hourlyDiv.innerHTML = "";
 
-  for (let i = 0; i < 24; i++) {
+  for (let i = currentHour; i < 24; i++) {
     hourlyDiv.innerHTML += `
       <div class="forecast-card">
         <p>${data.hourly.time[i].slice(11,16)}</p>
@@ -69,6 +58,8 @@ async function fetchWeatherData(lat, lon) {
       </div>
     `;
   }
+
+  hourlyDiv.scrollLeft = 0; // always start from current hour
 
   // 📅 7-Day Forecast
   const dailyDiv = document.getElementById("dailyForecast");
@@ -88,24 +79,20 @@ async function fetchWeatherData(lat, lon) {
 }
 
 // 🌈 Weather Icons (FIXED)
-function getWeatherIcon(code, isDay = true) {
-  const icons = {
-    0:'☀️', 1:'⛅', 2:'🌤️', 3:'☁️',
-    45:'🌫️', 48:'🌫️',
-    51:'🌦️', 53:'⛅', 55:'🌧️',
-    61:'🌧️', 63:'🌧️', 65:'🌧️',
-    71:'❄️', 73:'❄️', 75:'❄️',
-    77:'❄️',
-    80:'🌦️', 81:'🌦️', 83:'🌧️',
-    85:'❄️', 86:'❄️',
-    95:'⛈️', 96:'⛈️', 99:'⛈️'
+function getWeatherIcon(code, isDay=true){
+  const icons={
+    0:'☀',1:'⛅',2:'🌤',3:'☁',
+    45:'🌫',48:'🌫',51:'☁',53:'⛅',55:'☁',
+    61:'☁',63:'☁',65:'☁',71:'☁',73:'☁',
+    75:'☁',77:'☁',80:'☁',81:'☁',83:'☁',
+    85:'☁',86:'☁',95:'⛈',96:'⛈',99:'⛈'
   };
-  return icons[code] || '🌤️';
+  return icons[code] || '🌤';
 }
 
-// 📝 Weather Description (FIXED)
-function getWeatherDescription(code) {
-  const descriptions = {
+// 📝 Weather Description
+function getWeatherDescription(code){
+  const descriptions={
     0:'Clear sky',
     1:'Mainly cloudy',
     2:'Partly cloudy',
@@ -123,5 +110,13 @@ function getWeatherDescription(code) {
     75:'Heavy snow',
     95:'Thunderstorm'
   };
-  return descriptions[code] || 'Unknown weather';
+  return descriptions[code] || 'Unknown';
+}
+function scrollHourly(direction) {
+  const container = document.getElementById("hourlyForecast");
+  const scrollAmount = 300; // FAST scroll
+  container.scrollBy({
+    left: direction * scrollAmount,
+    behavior: "smooth"
+  });
 }

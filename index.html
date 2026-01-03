@@ -21,10 +21,16 @@
   </div>
 
   <h3>Hourly Forecast</h3>
+
+<div class="scroll-wrapper">
+  <button class="scroll-btn left" onclick="scrollHourly(-1)">❮</button>
+
   <div id="hourlyForecast" class="forecast-row"></div>
 
-  <h3>7-Day Forecast</h3>
-  <div id="dailyForecast" class="forecast-row"></div>
+  <button class="scroll-btn right" onclick="scrollHourly(1)">❯</button>
+</div>
+<h3 class="section-title">7-Day Forecast</h3>
+<div id="dailyForecast" class="forecast-row"></div>
 
   <script src="script.js"></script>
 </body>
